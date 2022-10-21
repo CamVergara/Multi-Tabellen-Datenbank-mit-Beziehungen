@@ -1,0 +1,107 @@
+CREATE DATABASE Music DEFAULT CHARACTER SET utf8;
+
+USE Music;  (Command line only)
+
+CREATE TABLE Artist (
+  artist_id INTEGER NOT NULL AUTO_INCREMENT,
+  name VARCHAR(255),
+  PRIMARY KEY(artist_id)
+) ENGINE = InnoDB;
+
+CREATE TABLE Album (
+  album_id INTEGER NOT NULL AUTO_INCREMENT,
+  title VARCHAR(255),
+  artist_id INTEGER,
+
+  PRIMARY KEY(album_id),
+  INDEX USING BTREE (title),
+
+  CONSTRAINT FOREIGN KEY (artist_id)
+    REFERENCES Artist (artist_id)
+    ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB;
+
+CREATE TABLE Genre (
+  genre_id INTEGER NOT NULL AUTO_INCREMENT,
+  name VARCHAR(255),
+  PRIMARY KEY(genre_id)
+) ENGINE = InnoDB;
+
+CREATE TABLE Track (
+  track_id INTEGER NOT NULL AUTO_INCREMENT,
+  title VARCHAR(255),
+  len INTEGER,
+  rating INTEGER,
+  count INTEGER,
+  album_id INTEGER,
+  genre_id INTEGER,
+
+  PRIMARY KEY(track_id),
+  INDEX USING BTREE (title),
+
+  CONSTRAINT FOREIGN KEY (album_id) REFERENCES Album (album_id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT FOREIGN KEY (genre_id) REFERENCES Genre (genre_id)
+    ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB;
+
+INSERT INTO Artist (name) VALUES ('Rammstein');
+INSERT INTO Artist (name) VALUES ('Rihanna');
+INSERT INTO Artist (name) VALUES ('Phoebe Bridgers');
+
+INSERT INTO Genre (name) VALUES ('Metal');
+INSERT INTO Genre (name) VALUES ('Pop');
+INSERT INTO Genre (name) VALUES ('Indie');
+
+INSERT INTO Album (title, artist_id) VALUES ('Mutter', 1);
+INSERT INTO Album (title, artist_id) VALUES ('Zeit', 1);
+INSERT INTO Album (title, artist_id) VALUES ('Good girl, bad gone', 2);
+INSERT INTO Album (title, artist_id) VALUES ('Anti', 2);
+INSERT INTO Album (title, artist_id) VALUES ('Punished', 3);
+
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('Kyoto', 5, 297, 0, 6, 3);
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('Hallowen', 5, 277, 0, 6, 3);
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('Punisher', 5, 197, 0, 6, 3);
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('Chinese Satelite', 5, 97, 0, 6, 3);
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('Umbrella', 5, 482, 0, 3, 2);
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('Don not stop the music', 5, 782, 0, 3, 2);    
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('Say it', 5, 32, 0, 3, 2);    
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('Sell me candy', 5, 2, 0, 3, 2);    
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('Consideration', 5, 482, 0, 4, 2);    
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('Work', 5, 756, 0, 4, 2); 
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('Desesperado', 5, 22, 0, 4, 2); 
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('Needed me', 5, 133, 0, 4, 2); 
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('Mein Herz brennt', 5, 313, 0, 1, 1);
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('Sonne', 5, 513, 0, 1, 1);
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('Ich will', 5, 813, 0, 1, 1);
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('Spieluhr', 5, 13, 0, 1, 1);
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('Zick Zack', 5, 207, 0, 2, 1);
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('Schwarz', 5, 107, 0, 2, 1);
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('Meine Tränen', 5, 267, 0, 2, 1);
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('Armee der Tristen', 5, 7, 0, 2, 1);
+    
+SELECT Album.title, Artist.name FROM Album JOIN Artist ON
+    Album.artist_id = Artist.artist_id
+
+SELECT Album.title, Album.artist_id, Artist.artist_id, Artist.name 
+    FROM Album JOIN Artist ON Album.artist_id = Artist.artist_id
