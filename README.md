@@ -14,7 +14,7 @@ SELECT Track.title as Song, Artist.name as Artist, Album.title Album, Genre.name
     Album.album_id AND Album.artist_id = Artist.artist_id
     group by Track.title ASC
 ```
-# Buildt with the use of
+# Built using
 - Primary key
 - Logical key
 - Foreing key
